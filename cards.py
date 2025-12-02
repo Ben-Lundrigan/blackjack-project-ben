@@ -14,3 +14,13 @@ def create_deck():
             deck.append([suit, rank, value])
     random.shuffle(deck)
     return deck
+
+def deal_card(deck, hand):
+    hand.append(deck.pop())
+
+def show_cards(title, hand):
+    if title != "":
+        print(title)
+    for c in hand:
+        print(f"{c[1]} of {c[0]}")
+    print()
