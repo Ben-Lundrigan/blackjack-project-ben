@@ -1,9 +1,20 @@
 # Money file module
 
 def read_money():
-    with open("money.txt") as file:
-        return float(file.readline())
+    try:
+        with open("money.txt") as file:
+            line = file.readline().replace("\n", "")
+            return float(line)
+    except FileNotFoundError:
+        print("Money file not found. Starting with 100.0.")
+        return 100.0
+    except ValueError:
+        print("Money file corrupted. Resetting to 100.0.")
+        return 100.0
 
 def write_money():
-    with open("money.txt", "w") as file:
-        file.write(str(money))
+    try:
+        with open("money.txt", "w") as file:
+            file.write(str(money) + "\n")
+    except Exeption:
+        print("Error writing money file.")
