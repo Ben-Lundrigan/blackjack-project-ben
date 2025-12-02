@@ -24,3 +24,15 @@ def show_cards(title, hand):
     for c in hand:
         print(f"{c[1]} of {c[0]}")
     print()
+
+def hand_total(hand):
+    total = 0
+    aces = 0
+    for suit, rank, value in hand:
+        total += value
+        if rank == "Ace":
+            aces += 1
+    while total > 21 and aces > 0:
+        total -= 10
+        aces -= 1
+    return total
