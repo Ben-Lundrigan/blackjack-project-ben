@@ -12,7 +12,7 @@ def read_money():
         print("Money file corrupted. Resetting to 100.0.")
         return 100.0
 
-def write_money():
+def write_money(money):
     try:
         with open("money.txt", "w") as file:
             file.write(str(money) + "\n")
