@@ -16,5 +16,5 @@ def write_money(money):
     try:
         with open("money.txt", "w") as file:
             file.write(str(money) + "\n")
-    except Exeption:
+    except Exception:
         print("Error writing money file.")

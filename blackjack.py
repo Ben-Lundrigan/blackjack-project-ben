@@ -31,7 +31,8 @@ def main():
         deal_card(deck, player)
         deal_card(deck, dealer)
 
-        show_cards("DEALER'S CARDS:", dealer)
+        print("DEALERS'S SHOW CARD:")
+        print(f"{dealer[0][1]} of {dealer[0][0]}")
         show_cards("YOUR CARDS:", player)
 
         # Hit/Stand
@@ -54,6 +55,10 @@ def main():
         player_total = hand_total(player)
         dealer_total = hand_total(dealer)
 
+        print(f"YOUR POINTS: {player_total}")
+        print(f"DEALER'S POINTS: {dealer_total}")
+        print()
+
         if dealer_total > 21:
             print("Dealer busts. You win!")
             money += bet
@@ -61,10 +66,17 @@ def main():
             print("You win!")
             money += bet
         elif player_total < dealer_total:
-            print("You lose!")
+            print("Sorry. You lose.")
             money -= bet
 
         db.write_money(money)
+        
+        again = input("Play again? (y/n): ")
+        print()
+        if again.lower() != "y":
+            print("Come back soon!")
+            print("Bye!")
+            break
 
 if __name__ == "__main__":
     main()
