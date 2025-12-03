@@ -60,6 +60,41 @@ def main():
         print()
         show_cards("YOUR CARDS:", player)
 
+        # Check for blackjack before hit/stand
+        player_total = hand_total(player)
+        dealer_total = hand_total(dealer)
+
+        if player_total == 21 or dealer_total == 21:
+            print("DEALER'S CARDS:")
+            show_cards("", dealer)
+
+            print(f"YOUR POINTS: {player_total}")
+            print(f"DEALER'S POINTS: {dealer_total}")
+            print()
+
+            if player_total == 21 and dealer_total != 21:
+                print("Blackjack! You win.")
+                money += bet   # real 3:2 payout comes in the next commit
+            elif dealer_total == 21 and player_total != 21:
+                print("Dealer has blackjack. You lose.")
+                money -= bet
+            else:
+                print("Push. No one wins.")
+
+            print(f"Money: {money}")
+            db.write_money(money)
+
+            print()
+            again = input("Play again? (y/n): ")
+            print()
+            if again.lower() != "y":
+                print("Come back soon!")
+                print("Bye!")
+                break
+            else:
+                continue
+
+
         # Hit/Stand
         busted = False
         while True:
