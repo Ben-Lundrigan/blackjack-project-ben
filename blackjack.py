@@ -1,7 +1,7 @@
 # Main module
 from cards import create_deck, deal_card, show_cards, hand_total
 from rules import validate_bet
-from rules import dealer_hit_to_17
+from rules import dealer_hit_to_17, blackjack_payout
 import db
 
 def display_title():
@@ -74,7 +74,8 @@ def main():
 
             if player_total == 21 and dealer_total != 21:
                 print("Blackjack! You win.")
-                money += bet   # real 3:2 payout comes in the next commit
+                win = blackjack_payout(bet)
+                money += win
             elif dealer_total == 21 and player_total != 21:
                 print("Dealer has blackjack. You lose.")
                 money -= bet
@@ -143,7 +144,8 @@ def main():
             print(f"Money: {money}")
         elif player_total > dealer_total:
             print("You win!")
-            money += bet
+            win = blackjack_payout(bet)
+            money += win
             print(f"Money: {money}")
         elif player_total < dealer_total:
             print("Sorry. You lose.")
