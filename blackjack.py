@@ -55,12 +55,13 @@ def main():
         deal_card(deck, player)
         deal_card(deck, dealer)
 
-        print("DEALERS'S SHOW CARD:")
+        print("DEALER'S SHOW CARD:")
         print(f"{dealer[0][1]} of {dealer[0][0]}")
         print()
         show_cards("YOUR CARDS:", player)
 
         # Hit/Stand
+        busted = False
         while True:
             choice = input("Hit or stand? (hit/stand): ")
             if choice == "hit":
@@ -70,9 +71,24 @@ def main():
                 if hand_total(player) > 21:
                     print("You bust!")
                     money -= bet
+                    print(f"Money: {money}")
+                    busted = True
                     break
             elif choice == "stand":
                 break
+
+        if busted:
+            db.write_money(money)
+            print()
+            again = input("Play again? (y/n): ")
+            print()
+            if again.lower() != "y":
+                print("Come back soon!")
+                print("Bye!")
+                break
+            else:
+                continue
+
 
         # Dealer turn
         print()
@@ -97,6 +113,9 @@ def main():
         elif player_total < dealer_total:
             print("Sorry. You lose.")
             money -= bet
+            print(f"Money: {money}")
+        else:
+            print("Push. No one wins.")
             print(f"Money: {money}")
 
         db.write_money(money)
