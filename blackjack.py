@@ -1,6 +1,7 @@
 # Main module
 from cards import create_Deck, deal_card, show_cards, hand_total
 from rules import validate_bet
+from rules import dealer_hit_to_17
 import db
 
 def display_title():
@@ -31,7 +32,22 @@ def main():
 
         show_cards(f"YOUR CARDS: {player}")
 
-        # Hit/Stand 
+        # Hit/Stand
+        while True:
+            choice = input("Hit or stand? (hit/stand): ")
+            if choice == "hit":
+                deal_card(deck, player)
+                show_cards(f"YOUR CARDS: {player}")
+                if hand_total(player) > 21:
+                    print("You bust!")
+                    money -= bet
+                    break
+            elif choice == "stand":
+                break
+
+        # Dealer turn
+        dealer_hit_to_17(deck, dealer)
+        show_cards(f"DEALER CARDS: {dealer}")
 
 if __name__ == "__main__":
     main()
